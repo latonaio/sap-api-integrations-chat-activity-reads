@@ -10,7 +10,7 @@ import (
 func main() {
 	l := logger.NewLogger()
 	fr := sap_api_input_reader.NewFileReader()
-	inoutSDC := fr.ReadSDC("./Inputs/SDC_ChatActivity_Chat_Activity_Text_Collection_sample.json")
+	inoutSDC := fr.ReadSDC("./Inputs/SDC_ChatActivity_Chat_Activity_Collection_sample.json")
 	caller := sap_api_caller.NewSAPAPICaller(
 		"https://sandbox.api.sap.com/sap/c4c/odata/v1/", l,
 	)
