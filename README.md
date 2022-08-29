@@ -33,8 +33,8 @@ sap-api-integrations-chat-activity-reads において、API への値入力条�
 
 ### SDC レイアウト
 
+* inoutSDC.ChatActivityCollection.ObjectID（対象ID）
 * inoutSDC.ChatActivityCollection.ID（ID）
-* inoutSDC.ChatActivityCollection.ChatActivityParties（チャット情報）  
 * ChatActivityTextCollection.Text（テキスト）
 
 ## SAP API Bussiness Hub の API の選択的コール
@@ -48,7 +48,7 @@ accepter において 下記の例のように、データの種別（＝APIの�
 ここでは、"ChatActivityCollection" が指定されています。    
   
 ```
-    "api_schema":  "ChatActivityCollection",
+   "api_schema":  "ChatActivity",
 	"accepter": ["ChatActivityCollection"],
 	"chat_activity_code": "3",
 	"deleted": false
@@ -59,7 +59,7 @@ accepter において 下記の例のように、データの種別（＝APIの�
 全データを取得する場合、sample.json は以下のように記載します。  
 
 ```
-    "api_schema":  "ChatActivityCollection",
+    "api_schema":  "ChatActivity",
 	"accepter": ["All"],
 	"chat_activity_code": "3",
 	"deleted": false
@@ -71,19 +71,19 @@ accepter における データ種別 の指定に基づいて SAP_API_Caller �
 caller.go の func() 毎 の 以下の箇所が、指定された API をコールするソースコードです。  
 
 ```
-func (c *SAPAPICaller) AsyncGetChatActivityCollection(iD, text string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetChatActivityCollection(objectID, iD, text string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
 		switch fn {
 		case "ChatActivityCollection":
 			func() {
-				c.ChatActivityCollection(iD)
+				c.ChatActivityCollection(objectID, iD)
 				wg.Done()
 			}()
 		case "ChatActivityTextCollection":
 			func() {
-				c.ChatActivityTextCollection(text)
+				c.ChatActivityTextCollection(objectID, text)
 				wg.Done()
 			}()
 		default:

@@ -74,7 +74,7 @@ type SDC struct {
 		AdditionalLocationName                               string `json:"AdditionalLocationName"`
 		AvailabilityCode                                     string `json:"AvailabilityCode"`
 		AvailabilityCodeText                                 string `json:"AvailabilityCodeText"`
-		BouncedIndicator                                     string `json:"BouncedIndicator"`
+		BouncedIndicator                                     bool   `json:"BouncedIndicator"`
 		CompletionDateTime                                   string `json:"CompletionDateTime"`
 		CompletionPercent                                    string `json:"CompletionPercent"`
 		CorrespondenceTransmissionStatusCode                 string `json:"CorrespondenceTransmissionStatusCode"`
@@ -91,11 +91,11 @@ type SDC struct {
 		DivisionDeterminationMethodCode                      string `json:"DivisionDeterminationMethodCode"`
 		DivisionDeterminationMethodCodeText                  string `json:"DivisionDeterminationMethodCodeText"`
 		ExternalName                                         string `json:"ExternalName"`
-		FullDayIndicator                                     string `json:"FullDayIndicator"`
+		FullDayIndicator                                     bool   `json:"FullDayIndicator"`
 		GroupwareItemID                                      string `json:"GroupwareItemID"`
 		GroupCode                                            string `json:"GroupCode"`
 		GroupCodeText                                        string `json:"GroupCodeText"`
-		GroupwareSynchronizationNonRelevanceIndicator        string `json:"GroupwareSynchronizationNonRelevanceIndicator"`
+		GroupwareSynchronizationNonRelevanceIndicator        bool   `json:"GroupwareSynchronizationNonRelevanceIndicator"`
 		ID                                                   string `json:"ID"`
 		InformationSensitivityCode                           string `json:"InformationSensitivityCode"`
 		InformationSensitivityCodeText                       string `json:"InformationSensitivityCodeText"`
@@ -104,10 +104,10 @@ type SDC struct {
 		InitiatorCodeText                                    string `json:"InitiatorCodeText"`
 		LocationName                                         string `json:"LocationName"`
 		MarkedForDeletionDate                                string `json:"MarkedForDeletionDate"`
-		MarkedForDeletion                                    string `json:"MarkedForDeletion"`
+		MarkedForDeletion                                    bool   `json:"MarkedForDeletion"`
 		MigratedDataAdaptationTypeCode                       string `json:"MigratedDataAdaptationTypeCode"`
 		MigratedDataAdaptationTypeCodeText                   string `json:"MigratedDataAdaptationTypeCodeText"`
-		PerfectStoreIndicator                                string `json:"PerfectStoreIndicator"`
+		PerfectStoreIndicator                                bool   `json:"PerfectStoreIndicator"`
 		PlannedDuration                                      string `json:"PlannedDuration"`
 		PredecessorActivityUUID                              string `json:"PredecessorActivityUUID"`
 		PriorityCode                                         string `json:"PriorityCode"`

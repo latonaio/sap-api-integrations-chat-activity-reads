@@ -1,5 +1,5 @@
 {
-	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-chat-activity-reads/SAP_API_Caller/caller.go#L58",
+	"cursor": "/Users/latona5/bitbucket/sap-api-integrations-chat-activity-reads/SAP_API_Caller/caller.go#L58",
 	"function": "sap-api-integrations-chat-activity-reads/SAP_API_Caller.(*SAPAPICaller).ChatActivityCollection",
 	"level": "INFO",
 	"message": [
@@ -91,5 +91,5 @@
 			"ToChatActivityParties": "https://sandbox.api.sap.com/sap/c4c/odata/v1/c4codataapi/ChatActivityCollection('00163E063FDC1ED48AA2AECE7D596AE4')/ChatActivityParties"
 		}
 	],
-	"time": "2022-05-21T18:13:04+09:00"
+	"time": "2022-08-29T21:29:11+09:00"
 }

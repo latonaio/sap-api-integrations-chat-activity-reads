@@ -26,19 +26,19 @@ func NewSAPAPICaller(baseUrl string, l *logger.Logger) *SAPAPICaller {
 	}
 }
 
-func (c *SAPAPICaller) AsyncGetChatActivityCollection(iD, text string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetChatActivityCollection(objectID, iD, text string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
 		switch fn {
 		case "ChatActivityCollection":
 			func() {
-				c.ChatActivityCollection(iD)
+				c.ChatActivityCollection(objectID, iD)
 				wg.Done()
 			}()
 		case "ChatActivityTextCollection":
 			func() {
-				c.ChatActivityTextCollection(text)
+				c.ChatActivityTextCollection(objectID, text)
 				wg.Done()
 			}()
 		default:
@@ -49,8 +49,8 @@ func (c *SAPAPICaller) AsyncGetChatActivityCollection(iD, text string, accepter 
 	wg.Wait()
 }
 
-func (c *SAPAPICaller) ChatActivityCollection(iD string) {
-	chatActivityCollectionData, err := c.callChatActivitySrvAPIRequirementChatActivityCollection("ChatActivityCollection", iD)
+func (c *SAPAPICaller) ChatActivityCollection(objectID, iD string) {
+	chatActivityCollectionData, err := c.callChatActivitySrvAPIRequirementChatActivityCollection("ChatActivityCollection", objectID, iD)
 	if err != nil {
 		c.log.Error(err)
 		return
@@ -66,12 +66,12 @@ func (c *SAPAPICaller) ChatActivityCollection(iD string) {
 
 }
 
-func (c *SAPAPICaller) callChatActivitySrvAPIRequirementChatActivityCollection(api, iD string) ([]sap_api_output_formatter.ChatActivityCollection, error) {
+func (c *SAPAPICaller) callChatActivitySrvAPIRequirementChatActivityCollection(api, objectID, iD string) ([]sap_api_output_formatter.ChatActivityCollection, error) {
 	url := strings.Join([]string{c.baseURL, "c4codataapi", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
 	c.setHeaderAPIKeyAccept(req)
-	c.getQueryWithChatActivityCollection(req, iD)
+	c.getQueryWithChatActivityCollection(req, objectID, iD)
 
 	resp, err := new(http.Client).Do(req)
 	if err != nil {
@@ -105,8 +105,8 @@ func (c *SAPAPICaller) callChatActivityParties(url string) ([]sap_api_output_for
 	return data, nil
 }
 
-func (c *SAPAPICaller) ChatActivityTextCollection(text string) {
-	data, err := c.callChatActivitySrvAPIRequirementChatActivityTextCollection("ChatActivityTextCollectionCollection", text)
+func (c *SAPAPICaller) ChatActivityTextCollection(objectID, text string) {
+	data, err := c.callChatActivitySrvAPIRequirementChatActivityTextCollection("ChatActivityTextCollectionCollection", objectID, text)
 	if err != nil {
 		c.log.Error(err)
 		return
@@ -114,12 +114,12 @@ func (c *SAPAPICaller) ChatActivityTextCollection(text string) {
 	c.log.Info(data)
 }
 
-func (c *SAPAPICaller) callChatActivitySrvAPIRequirementChatActivityTextCollection(api, text string) ([]sap_api_output_formatter.ChatActivityTextCollection, error) {
+func (c *SAPAPICaller) callChatActivitySrvAPIRequirementChatActivityTextCollection(api, objectID, text string) ([]sap_api_output_formatter.ChatActivityTextCollection, error) {
 	url := strings.Join([]string{c.baseURL, "c4codataapi", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
 	c.setHeaderAPIKeyAccept(req)
-	c.getQueryWithChatActivityCollection(req, text)
+	c.getQueryWithChatActivityCollection(req, objectID, text)
 
 	resp, err := new(http.Client).Do(req)
 	if err != nil {
@@ -140,14 +140,14 @@ func (c *SAPAPICaller) setHeaderAPIKeyAccept(req *http.Request) {
 	req.Header.Set("Accept", "application/json")
 }
 
-func (c *SAPAPICaller) getQueryWithChatActivityCollection(req *http.Request, iD string) {
+func (c *SAPAPICaller) getQueryWithChatActivityCollection(req *http.Request, objectID, iD string) {
 	params := req.URL.Query()
-	params.Add("$filter", fmt.Sprintf("ID eq '%s'", iD))
+	params.Add("$filter", fmt.Sprintf("ObjectID eq '%s' and ID eq '%s'", objectID, iD))
 	req.URL.RawQuery = params.Encode()
 }
 
-func (c *SAPAPICaller) getQueryWithChatActivityTextCollection(req *http.Request, text string) {
+func (c *SAPAPICaller) getQueryWithChatActivityTextCollection(req *http.Request, objectID, text string) {
 	params := req.URL.Query()
-	params.Add("$filter", fmt.Sprintf("substringof('%s', Text)", text))
+	params.Add("$filter", fmt.Sprintf("ObjectID eq '%s' and substringof('%s', Text)", objectID, text))
 	req.URL.RawQuery = params.Encode()
 }
